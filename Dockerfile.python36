@@ -1,0 +1,20 @@
+FROM microsoft/nanoserver:latest
+
+ADD python-3.6.1-amd64.zip .
+ADD Install-Python.ps1 .
+
+# Will be expanded to \opt'python36 folder
+RUN powershell ./Install-Python.ps1 python-3.6.1-amd64.zip /opt
+
+ENV PATH="${PATH};\\opt\\python36;\\opt\\python36\\scripts"
+
+RUN del python-3.6.1-amd64.zip Install-Python.ps1
+
+# Remove broken runners
+RUN del \opt\python36\scripts\pip.exe \opt\python36\scripts\pip.exe \opt\python36\scripts\easy_install.exe \opt\python36\scripts\easy_install-3.6.exe \opt\python36\scripts\wheel.exe
+
+# Reinstall pip and easy_install (setuptools) from upstream
+ADD https://bootstrap.pypa.io/get-pip.py .
+RUN python get-pip.py --no-cache-dir --disable-pip-version-check
+RUN del get-pip.py
+RUN python -m pip install --no-cache-dir --upgrade --force pip setuptools

@@ -1,0 +1,8 @@
+<Options>
+    <Option Name="quiet" Value="yes" />
+    <Option Name="InstallAllUsers" Value="no" />
+    <Option Name="Include_launcher" Value="0" />
+    <Option Name="Include_test" Value="no" />
+    <Option Name="SimpleInstall" Value="yes" />
+    <Option Name="PrependPath" Value="0"/>
+</Options>
